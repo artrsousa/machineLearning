@@ -17,4 +17,4 @@ data2test = [data2test, data(1:dim(1), 7)];
 chdir(path);
 
 %X = data{2:dim(1), 1:2};
-[classifier, accuracy, partitionedModel] = fitdisc(data2test);
+[classifier, accuracy, partitionedModel, history] = fitdisc(data2test);

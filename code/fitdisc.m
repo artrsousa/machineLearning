@@ -1,22 +1,25 @@
 % type = ['linear','diaglinear','pseudolinear','quadratic','diagquadratic','pseudoquadratic']; 
 % Get Data as inputTable of [n,p]dim. As predictor use inputTable(:,p-1), the P column is the response class  
-function [trainedClassifier, validationAccuracy, partitionedModel] = fitdisc(trainingData)
+function [trainedClassifier, validationAccuracy, partitionedModel, validationAccuracyHistory] = fitdisc(trainingData)
     type = ["linear","quadratic","diagLinear","quadratic","diagQuadratic","pseudoLinear", "pseudoQuadratic"]; 
-    
-    partitionedModel = [];
-    trainedClassifier = [];
-    validationAccuracy = [];
+    validationAccuracyHistory = [];
     
     for x=1:size(type, 2)
         trainedClassifier = discriminantClassifier(trainingData, type(x));
-        
-        % Perform and compute cross-validation
         partitionedModel = crossval(trainedClassifier.ClassificationDiscriminant, 'KFold', 5);
         [validationPredictions, validationScores] = kfoldPredict(partitionedModel);
-
-        % Compute validation accuracy
-        validationAccuracy = 1 - kfoldLoss(partitionedModel, 'LossFun', 'ClassifError');
+        validationAccuracyHistory = [validationAccuracyHistory, 1 - kfoldLoss(partitionedModel, 'LossFun', 'ClassifError')];
     end
+    
+    [~, index] = max(validationAccuracyHistory);
+    trainedClassifier = discriminantClassifier(trainingData, type(index));
+        
+    % Perform and compute cross-validation
+    partitionedModel = crossval(trainedClassifier.ClassificationDiscriminant, 'KFold', 5);
+    [validationPredictions, validationScores] = kfoldPredict(partitionedModel);
+        
+    % Compute validation accuracy
+    validationAccuracy = 1 - kfoldLoss(partitionedModel, 'LossFun', 'ClassifError');
     
     function trainedClassifier = discriminantClassifier(trainingData, discriminantType)
         [~, p] = size(trainingData);
