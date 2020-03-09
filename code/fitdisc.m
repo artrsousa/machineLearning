@@ -7,7 +7,7 @@ function [trainedClassifier, validationAccuracy, partitionedModel] = fitdisc(tra
     trainedClassifier = [];
     validationAccuracy = [];
     
-    for x=1:2 %size(type, 2)
+    for x=1:size(type, 2)
         trainedClassifier = discriminantClassifier(trainingData, type(x));
         
         % Perform and compute cross-validation
