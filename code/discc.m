@@ -1,6 +1,6 @@
 % type = ['linear','diaglinear','pseudolinear','quadratic','diagquadratic','pseudoquadratic']; 
 % Get Data as inputTable of [n,p]dim. As predictor use inputTable(:,p-1), the P column is the response class  
-function [trainedClassifier, validationAccuracy, partitionedModel, validationAccuracyHistory] = fitdisc(trainingData)
+function [trainedClassifier, validationAccuracy, partitionedModel, validationAccuracyHistory] = discc(trainingData)
     type = ["linear","quadratic","diagLinear","quadratic","diagQuadratic","pseudoLinear","pseudoQuadratic"]; 
     validationAccuracyHistory = [];
     

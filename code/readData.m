@@ -1,7 +1,6 @@
 % Read all files (in case .csv) %
 
 function csv = readData(path, file)
-    disp(pwd());    
     chdir(strcat('dataSet/', path));
     
     %% Initialize variables.

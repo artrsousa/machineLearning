@@ -4,7 +4,6 @@ clear();
 path = 'D:\MachineLearning\machinelearning\';
 dataset = "biomechanical_features";
 
-% files = ["column_3C_weka.csv", "column_2C_weka.csv"];
 files = ["column_3C_weka.csv", "column_2C_weka.csv"];
 
 chdir(path);
@@ -16,4 +15,10 @@ data2test = [data2test, data(1:dim(1), 7)];
 
 chdir(path);
 
-[classifier, accuracy, partitionedModel, history] = fitdisc(data2test)
+disp('Discriminant analysis...');
+[classifier, accuracy, partitionedModel, history] = discc(data2test);
+disp(accuracy);
+
+disp('Classification tree');
+[classifier, accuracy, partitionedModel, history] = treec(data2test);
+disp(accuracy);
