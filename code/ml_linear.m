@@ -2,7 +2,7 @@ clc();
 clear();
 
 path = 'D:\MachineLearning\machinelearning\';
-dataset = 'biomechanical_features';
+dataset = "biomechanical_features";
 
 % files = ["column_3C_weka.csv", "column_2C_weka.csv"];
 files = ["column_3C_weka.csv", "column_2C_weka.csv"];
@@ -16,5 +16,4 @@ data2test = [data2test, data(1:dim(1), 7)];
 
 chdir(path);
 
-%X = data{2:dim(1), 1:2};
-[classifier, accuracy, partitionedModel, history] = fitdisc(data2test);
+[classifier, accuracy, partitionedModel, history] = fitdisc(data2test)
