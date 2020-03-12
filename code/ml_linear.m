@@ -22,3 +22,9 @@ disp(accuracy);
 disp('Classification tree');
 [classifier, accuracy, partitionedModel, history] = treec(data2test);
 disp(accuracy);
+
+disp('Nayve Bayes');
+[classifier, accuracy, partitionedModel, history] = bayesc(data2test);
+disp(accuracy);
+
+
