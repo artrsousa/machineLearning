@@ -1,44 +1,40 @@
-clc();
-clear();
+clear; close all; clc;
 
-path = 'D:\MachineLearning\machinelearning\';
+% path = 'D:\MachineLearning\machinelearning\';
+path = pwd();
 dataset = "biomechanical_features";
 
-files = ["column_3C_weka.csv", "column_2C_weka.csv"];
-
-chdir(path);
+files = ["column_3C_weka.csv","column_2C_weka.csv"];
 data = cell2table(readfromcsv(dataset, files(1)));
-dim = size(data);
-
-data2test = data(1:dim(1), 1:2);
-data2test = [data2test, data(1:dim(1), 7)];
-
+ 
 chdir(path);
 
-disp('Discriminant analysis...');
-[classifier, accuracy, partitionedModel, history] = discc(data2test);
-disp(accuracy);
+[rows, col] = size(data);
+predictorNames = data.Properties.VariableNames(1:col-1);
+predictors = data(:, predictorNames);
+response = data{:, col};
 
-disp('Classification tree');
-[classifier, accuracy, partitionedModel, history] = treec(data2test);
-disp(accuracy);
+pmod = cvpartition(rows, 'HoldOut', 0.3);
+train_id = training(pmod);
+test_id = test(pmod);
 
-disp('Nayve Bayes');
-[classifier, accuracy, partitionedModel, history] = bayesc(data2test);
-disp(accuracy);
+% disp('Discriminant analysis...');
+% discc(predictors,response,train_id,test_id);
 
-disp('KNN - Classifier');
-[classifier, accuracy, partitionedModel, history] = knnc(data2test);
-disp(accuracy);
+% % disp('Classification tree');
+% treec(predictors,response,train_id,test_id);
 
-disp('SVM - Classifier');
-[classifier, accuracy, partitionedModel, history] = svmc(data2test);
-disp(accuracy);
+% % disp('Nayve Bayes');
+% classifier = bayesc(predictors,response,train_id,test_id);
 
-disp('Enssembles Tree - Classifier');
-[classifier, accuracy, partitionedModel, history] = enstreec(data2test);
-disp(accuracy);
+% 
+% % disp('KNN - Classifier');
+% knnc(predictors,response,train_id,test_id)
 
-disp('Enssembles Subspace - Classifier');
-[classifier, accuracy, partitionedModel, history] = enssubc(data2test);
-disp(accuracy);
+% 
+% % disp('SVM - Classifier');
+% classifier = svmc(predictors,response,train_id,test_id);
+
+% 
+% % disp('Enssembles Subspace - Classifier');
+classifier = enssc(predictors,response,train_id,test_id);

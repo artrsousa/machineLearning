@@ -1,7 +1,7 @@
 % Read all files (in case .csv) %
 
 function csv = readfromcsv(path, file)
-    chdir(strcat('dataSet/', path));
+    chdir(strcat('../dataSet/', path));
     
     %% Initialize variables.
     filename = file;

@@ -1,56 +1,20 @@
-% type = ['linear','diaglinear','pseudolinear','quadratic','diagquadratic','pseudoquadratic']; 
-% Get Data as inputTable of [n,p]dim. As predictor use inputTable(:,p-1), the P column is the response class  
-function [trainedClassifier, validationAccuracy, partitionedModel, validationAccuracyHistory] = discc(trainingData)
-    type = ["linear","quadratic","diagLinear","quadratic","diagQuadratic","pseudoLinear","pseudoQuadratic"]; 
-    validationAccuracyHistory = [];
+function discc(predictors, response, train_id, test_id)
+    fprintf('\n\nDiscriminant Analysis Classifier - Optimize All Hyperparameters\n');
+    classifier = fitcdiscr(...
+        predictors(train_id,:), ...
+        response(train_id), ...
+        'ClassNames', unique(response(train_id)), ...
+        'OptimizeHyperparameters', 'all', ...
+        'HyperparameterOptimizationOptions', struct('Holdout',0.3, ...
+        'AcquisitionFunctionName', 'expected-improvement-plus', ...
+        'ShowPlots', false, ...
+        'Verbose', 0));
     
-    for x=1:size(type, 2)
-        trainedClassifier = discriminantClassifier(trainingData, type(x));
-        partitionedModel = crossval(trainedClassifier.ClassificationDiscriminant, 'KFold', 5);
-        [~, ~] = kfoldPredict(partitionedModel);
-        validationAccuracyHistory = [validationAccuracyHistory, 1 - kfoldLoss(partitionedModel, 'LossFun', 'ClassifError')];
-    end
-    
-    [~, index] = max(validationAccuracyHistory);
-    trainedClassifier = discriminantClassifier(trainingData, type(index));
-        
-    % Perform and compute cross-validation
-    partitionedModel = crossval(trainedClassifier.ClassificationDiscriminant, 'KFold', 5);
-    [~, ~] = kfoldPredict(partitionedModel);
-        
-    % Compute validation accuracy
-    validationAccuracy = 1 - kfoldLoss(partitionedModel, 'LossFun', 'ClassifError');
-    validationAccuracy = [validationAccuracy, type(index)];
-    
-    function trainedClassifier = discriminantClassifier(trainingData, discriminantType)
-        [~, p] = size(trainingData);
-        inputTable = trainingData;
-        predictorNames = trainingData.Properties.VariableNames(1:p-1);
-        predictors = inputTable(:, predictorNames);
-        response = inputTable{:, p};
-
-        % Train a classifier
-        classificationDiscriminant = fitcdiscr(...
-            predictors, ...
-            response, ...
-            'DiscrimType', discriminantType, ...
-            'Gamma', 0, ...
-            'Delta', 0, ...
-            'FillCoeffs', 'off', ...
-            'ClassNames', unique(response), ...
-            'Prior', 'empirical', ...
-            'ScoreTransform', 'none', ...
-            'OptimizeHyperparameters', 'none');
-
-        % Create the result struct with predict function
-        predictorExtractionFcn = @(t) t(:, predictorNames);
-        discriminantPredictFcn = @(x) predict(classificationDiscriminant, x);
-        trainedClassifier.predictFcn = @(x) discriminantPredictFcn(predictorExtractionFcn(x));
-
-        % Add additional fields to the result struct
-        trainedClassifier.RequiredVariables = predictorNames;
-        trainedClassifier.ClassificationDiscriminant = classificationDiscriminant;
-    end
-
-    return;
+    fprintf('Min Objective: %s\n', num2str(classifier.HyperparameterOptimizationResults.MinObjective));
+    [label,~,~] = predict(classifier,predictors(test_id,:));
+    total = cellfun(@strcmp, response(test_id), label);
+    hits = total(total==1);
+    accuracy = size(hits,1)/size(total,1);
+    fprintf('Accuracy in test data: %s%%\n', num2str(accuracy*100));
+    disp(classifier.ModelParameters);
 end
