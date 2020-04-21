@@ -15,24 +15,24 @@ train_id = training(pmod);
 test_id = test(pmod);
 
 % disp('Discriminant analysis...');
-discc(predictors,response,train_id,test_id,file);
+% discc(predictors,response,train_id,test_id,file);
 
 % disp('Classification tree');
-treec(predictors,response,train_id,test_id,file);
+% treec(predictors,response,train_id,test_id,file);
 
 % % disp('Nayve Bayes');
 bayesc(predictors,response,train_id,test_id,file);
 
 % 
 % % disp('KNN - Classifier');
-knnc(predictors,response,train_id,test_id,file)
+% knnc(predictors,response,train_id,test_id,file)
 
 % 
 % % disp('SVM - Classifier');
-svmc(predictors,response,train_id,test_id,file);
+% svmc(predictors,response,train_id,test_id,file);
 
 % 
 % % disp('Enssembles Subspace - Classifier');
-enssc(predictors,response,train_id,test_id,file);
+% enssc(predictors,response,train_id,test_id,file);
 
 clear pmod train_id test_id rows col predictorNames predictors response results;
