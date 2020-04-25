@@ -21,7 +21,7 @@ test_id = test(pmod);
 % treec(predictors,response,train_id,test_id,file);
 
 % % disp('Nayve Bayes');
-bayesc(predictors,response,train_id,test_id,file);
+% bayesc(predictors,response,train_id,test_id,file);
 
 % 
 % % disp('KNN - Classifier');

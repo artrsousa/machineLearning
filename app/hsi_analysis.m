@@ -12,6 +12,8 @@ load casca_maca;
 load polpa_maca;
 load casca_nanica;
 load polpa_nanica;
+load casca_prata;
+load polpa_prata;
 
 % HSI FUNCTIONS
 %   [Y,C,sumd,D] = getClusters( PCAscore, pcs, k )
@@ -28,12 +30,10 @@ load polpa_nanica;
 %%  GENERATE THE HYPERCUBE
 banana_maca = cat(1,casca_maca,polpa_maca);
 banana_nanica = cat(1,casca_nanica,polpa_nanica);
-% banana_prata = cat(1,casca_maca,polpa_maca);
+banana_prata = cat(1,casca_prata,polpa_prata);
 
-hsi_samples = {banana_maca,banana_nanica};
-predictor_names = {'banana_maca', 'banana_nanica'};
+hsi_samples = {banana_maca,banana_nanica,banana_prata};
+predictor_names = {'banana_maca', 'banana_nanica','banana_prata'};
 
-hsi_classifiers(hsi_samples,predictor_names);
-
-
-
+hsi_classifiers_kmeans(hsi_samples,predictor_names);
+% hsi_classifiers(hsi_samples,predictor_names);
