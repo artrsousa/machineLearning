@@ -27,13 +27,18 @@ load polpa_prata;
 %   [CUBE] = matrix2hsi(X,n,p)
 %   [gray_image,rgb_image,fig] = showClusterOnImage(image,idx,cluster,r,g,b)
 
-%%  GENERATE THE HYPERCUBE
-banana_maca = cat(1,casca_maca,polpa_maca);
-banana_nanica = cat(1,casca_nanica,polpa_nanica);
-banana_prata = cat(1,casca_prata,polpa_prata);
+%%  LOAD DATA
+% banana_maca = cat(1,casca_maca,polpa_maca);
+% banana_nanica = cat(1,casca_nanica,polpa_nanica);
+% banana_prata = cat(1,casca_prata,polpa_prata);
 
-hsi_samples = {banana_maca,banana_nanica,banana_prata};
-predictor_names = {'banana_maca', 'banana_nanica','banana_prata'};
+% clear casca_maca polpa_maca casca_nanica polpa_nanica casca_prata polpa_prata;
 
-hsi_classifiers_kmeans(hsi_samples,predictor_names);
+%%  PREPARE DATA
+hsi_samples = struct('banana_maca',{{casca_maca,polpa_maca}}, ...
+    'banana_nanica',{{casca_nanica,polpa_nanica}}, ...
+    'banana_prata',{{casca_prata,polpa_prata}});
+
+%%  CLASSIFIERS PIPELINE
+hsi_classifiers_kmeans(hsi_samples);
 % hsi_classifiers(hsi_samples,predictor_names);
