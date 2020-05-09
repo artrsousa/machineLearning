@@ -5,10 +5,7 @@ function [y,idx] = hsi_classifiers_kmeans(hsi_samples)
 
     % DEFINE RESULTS FILE
     %   variable must be 'results'
-    file = '../results/banana.mat';
-    results = {};
-    save(file,'results');
-    clear results;
+
     
     %%  CREATE HYPERCUBE
     cube = cell(size(pred_names,1),1);
@@ -22,7 +19,7 @@ function [y,idx] = hsi_classifiers_kmeans(hsi_samples)
     data = hsi2matrix(finalcube);
     
     %%  PRE PROCESS - KMEANS
-    img = hsiGetImageLayer(finalcube,30);
+    img = hsiGetImageLayer(finalcube,2);
     idx = hsiRemoveBackground(data);
 
     showClusterOnImage(img, idx, 1, 0, 255, 0);  % show image to get which cluster is the background
@@ -34,7 +31,7 @@ function [y,idx] = hsi_classifiers_kmeans(hsi_samples)
     % data = data - repmat(mean(data), size(data,1), 1);
     
     % 0 TO BACKGROUND SPECTRUMS 
-    idx(idx~=sample) = 0;
+    idx(idx==sample) = 0;
     
     %%  GENERATE RESPONSE VECTOR
 %     s = 0;
@@ -77,17 +74,47 @@ function [y,idx] = hsi_classifiers_kmeans(hsi_samples)
         end
     end
     
-    showClusterOnImage(img, cell2mat(idx_train), 1, 0, 255, 0);
-    showClusterOnImage(img, cell2mat(idx_test), 1, 255, 0, 0);
+    %showClusterOnImage(img, cell2mat(idx_train), 1, 0, 255, 0);
+    %showClusterOnImage(img, cell2mat(idx_test), 1, 255, 0, 0);
     
     idx_train = boolean(cell2mat(idx_train));
     idx_test = boolean(cell2mat(idx_test));
+    
+    response = y(idx~=0,:);
+    testeIds = idx_test(idx~=0,:);
+    response_array = response(testeIds);
         
+    idxResultado = zeros(size(idx));
+    for x = 1:size(idx)
+        if(idx(x) ~= 0 && idx_test(x) ~= 0)
+            idxResultado(x) = 1;
+        end
+    end
+    showClusterOnImage(img,idxResultado, 1, 255, 0, 0);
+
 %%  CLASSIFY
-%     discc(score(:,1:2),y,train_id,test_id,file);
-%     treec(score(:,1:2),y,train_id,test_id,file);
-%     bayesc(score(:,1:2),y,train_id,test_id,file);
-%     knnc(score(:,1:2),y,train_id,test_id,file);
-    svmc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
-%     enssc(score(:,1:2),y,train_id,test_id,file);
+    % path_discc = '../results/discc.mat';
+    % create_file_result(path_discc);
+    % discc(data(idx~=0,:),y,train_id,test_id,path_discc);
+
+    % path_treec = '../results/treec';
+    % create_file_result(path_treec);
+    % treec(data(idx~=0,:),y,train_id,test_id,path_treec);
+
+    % path_bayesc = '../results/bayesc';
+    % create_file_result(path_bayesc);
+    % bayesc(data(idx~=0,:),y,train_id,test_id,path_bayesc);
+
+    % path_knnc = '../results/knnc';
+    % create_file_result(path_knnc);
+    % knnc(data(idx~=0,:),y,train_id,test_id,path_knnc);
+    % load('img.mat');
+    path_svmc = '../results/svmc.mat';
+    create_file_result(path_svmc);
+    svmc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),path_svmc);
+    result_process(path_svmc, true, true, true, idxResultado, response_array, img);
+
+    % path_enssc = '../results/enssc';
+    % create_file_result(path_enssc);
+    % enssc(data(idx~=0,:),y,train_id,test_id,path_enssc);
 end

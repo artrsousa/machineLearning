@@ -1,3 +1,4 @@
+
 %% CONFIGURE ENVIRONMENT
 close all; clc; clear;
 
@@ -8,12 +9,19 @@ config;
 %   BANANA - HSI
 %       casca_maca, casca_marmelo, casca_nanica, casca_prata
 %       polpa_maca, polpa_nanica, polpa_prata
-load casca_maca;
+%load casca_maca;
 load polpa_maca;
-load casca_nanica;
+%load casca_nanica;
 load polpa_nanica;
-load casca_prata;
+%load casca_prata;
 load polpa_prata;
+
+% casca_maca = casca_maca(:,:,1:6);
+% polpa_maca = polpa_maca(:,:,1:6);
+% casca_nanica = casca_nanica(:,:,1:6);
+% polpa_nanica = polpa_nanica(:,:,1:6);
+% casca_prata = casca_prata(:,:,1:6);
+% polpa_prata = polpa_prata(:,:,1:6);
 
 % HSI FUNCTIONS
 %   [Y,C,sumd,D] = getClusters( PCAscore, pcs, k )
@@ -35,9 +43,9 @@ load polpa_prata;
 % clear casca_maca polpa_maca casca_nanica polpa_nanica casca_prata polpa_prata;
 
 %%  PREPARE DATA
-hsi_samples = struct('banana_maca',{{casca_maca,polpa_maca}}, ...
-    'banana_nanica',{{casca_nanica,polpa_nanica}}, ...
-    'banana_prata',{{casca_prata,polpa_prata}});
+hsi_samples = struct('banana_maca',{{polpa_maca}}, ...
+    'banana_nanica',{{polpa_nanica}}, ...
+    'banana_prata',{{polpa_prata}});
 
 %%  CLASSIFIERS PIPELINE
 hsi_classifiers_kmeans(hsi_samples);

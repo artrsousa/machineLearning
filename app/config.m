@@ -5,4 +5,5 @@ function config
     
     addpath('../classifiers/');
     addpath('../hsifunctions/');
+    addpath('../helper/');
 

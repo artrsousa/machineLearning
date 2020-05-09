@@ -25,5 +25,6 @@ function treec(predictors, response, train_id, test_id, file)
     row = size(results,1)+1;
     results{row,1} = classifier;
     results{row,2} = accuracy*100;
+    results{row,3} = label;
     save(file,'results');
 end

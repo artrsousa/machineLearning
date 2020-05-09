@@ -25,6 +25,7 @@ function knnc(predictors, response, train_id, test_id, file)
     row = size(results,1)+1;
     results{row,1} = classifier;
     results{row,2} = accuracy*100;
+    results{row,3} = label;
     save(file,'results');
     
     fprintf('\n\nKNN Classifier - Optimize Minkowski Distance Exponent\n');
@@ -52,5 +53,6 @@ function knnc(predictors, response, train_id, test_id, file)
     row = size(results,1)+1;
     results{row,1} = classifier;
     results{row,2} = accuracy*100;
+    results{row,3} = label;
     save(file,'results');
 end

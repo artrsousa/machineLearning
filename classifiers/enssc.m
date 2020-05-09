@@ -27,6 +27,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
     row = size(results,1)+1;
     results{row,1} = classifier;
     results{row,2} = accuracy*100;
+    results{row,3} = label;
     save(file,'results');
     
     fprintf('\n\nEnssembles: KNN Classifier - Optimize All HyperParameters\n');
@@ -59,6 +60,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
     row = size(results,1)+1;
     results{row,1} = classifier;
     results{row,2} = accuracy*100;
+    results{row,3} = label;
     save(file,'results');
    
     disp('Enssembles: KNN Classifier - Optimize Minkowski Distance Exponent');
@@ -93,6 +95,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
     row = size(results,1)+1;
     results{row,1} = classifier;
     results{row,2} = accuracy*100;
+    results{row,3} = label;
     save(file,'results');
     
     disp('Enssembles: Discriminant Classifier');
@@ -124,5 +127,6 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
     row = size(results,1)+1;
     results{row,1} = classifier;
     results{row,2} = accuracy*100;
+    results{row,3} = label;
     save(file,'results');
 end
