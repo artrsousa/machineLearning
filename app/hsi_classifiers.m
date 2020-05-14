@@ -1,4 +1,3 @@
-%%  Test Hypercube with all classifiers
 function hsi_classifiers(hsi_samples,pred_names)
     % DEFINE RESULTS FILE
     %   variable must be 'results'

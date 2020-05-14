@@ -19,8 +19,8 @@ pmod = cvpartition(rows, 'HoldOut', 0.3);
 train_id = training(pmod);
 test_id = test(pmod);
 
- disp('Discriminant analysis...');
- discc(predictors,response,train_id,test_id,file);
+% disp('Discriminant analysis...');
+% discc(predictors,response,train_id,test_id,file);
 
 % disp('Classification tree');
 % treec(predictors,response,train_id,test_id,file);

@@ -9,7 +9,6 @@ config;
 %   BANANA - HSI
 %       casca_maca, casca_marmelo, casca_nanica, casca_prata
 %       polpa_maca, polpa_nanica, polpa_prata
-
 load casca_maca;
 load polpa_maca;
 load casca_nanica;
@@ -33,6 +32,14 @@ load polpa_prata;
 hsi_samples = struct('banana_maca',{{polpa_maca,casca_maca}}, ...
     'banana_nanica',{{polpa_nanica,casca_nanica}}, ...
     'banana_prata',{{polpa_prata,casca_prata}});
+
+%%  CLASSIFIERS PIPELINE
+hsi_classifiers_kmeans(hsi_samples);
+
+%%  PREPARE DATA
+hsi_samples = struct('banana_maca',{{casca_maca,polpa_maca}}, ...
+    'banana_nanica',{{casca_nanica,polpa_nanica}}, ...
+    'banana_prata',{{casca_prata,polpa_prata}});
 
 %%  CLASSIFIERS PIPELINE
 hsi_classifiers_kmeans(hsi_samples);

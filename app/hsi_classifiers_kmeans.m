@@ -1,4 +1,3 @@
-%%  Test Hypercube with all classifiers
 function [y,idx] = hsi_classifiers_kmeans(hsi_samples)
 % GET PREDICTOR NAMES
     pred_names = fieldnames(hsi_samples);
@@ -106,4 +105,4 @@ function [y,idx] = hsi_classifiers_kmeans(hsi_samples)
     svmc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
         
     show_results(file,idx_test_samples,response,img);
-    
+
