@@ -35,6 +35,5 @@ function show_results(result_file, idx, response, img)
     end
 
     figure; imshow(result_image);
-    
 %     show(result_image, classes, colors);
 end

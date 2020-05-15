@@ -1,4 +1,4 @@
-function [ gray_image, rgb_image, fig ] = showClusterOnImage( image, idx, cluster, r, g, b)
+function [gray_image,rgb_image,fig] = showClusterOnImage(image,idx,cluster,r,g,b,titleOf)
     rng(123); 
     idx = vec2mat(idx, size(image,2));
     [rows, cols] = find(idx==cluster);
@@ -13,7 +13,8 @@ function [ gray_image, rgb_image, fig ] = showClusterOnImage( image, idx, cluste
     blue(ind) = b;
     rgb_image = cat(3, red, green, blue);
     gray_image = rgb2gray(rgb_image);
-    fig = figure;
-    imshow(rgb_image);    
+    fig = figure; hold on;
+    imshow(rgb_image);
+    title(titleOf); hold off;
 end
 

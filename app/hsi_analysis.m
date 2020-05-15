@@ -29,17 +29,9 @@ load polpa_prata;
 %   [gray_image,rgb_image,fig] = showClusterOnImage(image,idx,cluster,r,g,b)
 
 %%  PREPARE DATA
-hsi_samples = struct('banana_maca',{{polpa_maca,casca_maca}}, ...
-    'banana_nanica',{{polpa_nanica,casca_nanica}}, ...
-    'banana_prata',{{polpa_prata,casca_prata}});
-
-%%  CLASSIFIERS PIPELINE
-hsi_classifiers_kmeans(hsi_samples);
-
-%%  PREPARE DATA
-hsi_samples = struct('banana_maca',{{casca_maca,polpa_maca}}, ...
-    'banana_nanica',{{casca_nanica,polpa_nanica}}, ...
-    'banana_prata',{{casca_prata,polpa_prata}});
+hsi_samples = struct('BananaMaca',{{polpa_maca}}, ...
+    'BananaNanica',{{polpa_nanica}}, ...
+    'BananaPrata',{{polpa_prata}});
 
 %%  CLASSIFIERS PIPELINE
 hsi_classifiers_kmeans(hsi_samples);

@@ -26,8 +26,8 @@ function [y,idx] = hsi_classifiers_kmeans(hsi_samples)
     img = hsiGetImageLayer(finalcube,2);
     idx = hsiRemoveBackground(data);
 
-    showClusterOnImage(img, idx, 1, 0, 255, 0);  % show image to get which cluster is the background
-    showClusterOnImage(img, idx, 2, 0, 0, 255);  %
+    showClusterOnImage(img,idx,1,0,255,0,'Cluster1');  % show image to get which cluster is the background
+    showClusterOnImage(img,idx,2,0,0,255,'Cluster2');  %
 
     sample = input('Which image has the background painted? 1(green) or 2(blue)');
     
@@ -94,15 +94,22 @@ function [y,idx] = hsi_classifiers_kmeans(hsi_samples)
         end
     end
     
-    showClusterOnImage(img,idx_test_samples,1,255,0,0);
-    showClusterOnImage(img,idx_train_samples,1,0,0,255);
+    showClusterOnImage(img,idx_test_samples,1,255,0,0,'Test Set');
+    showClusterOnImage(img,idx_train_samples,1,0,0,255,'Train Set');
+    
+%% Data analysis 
+% Show first N elements in each sample on hypercube
+% Ex. hsi_samples = ({polpa_nanica, casca_nanica}, {polpa_prata, casca_prata})
+%   The first N spectrums of each sample will be showed 
+% The mean of all spectrums of each class will be showed
+    data_analysis(hsi_samples,data,idx_train_samples,idx_test_samples,50);
     
 %%  CLASSIFY
-    discc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
-    treec(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
-    bayesc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
-    knnc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
-    svmc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
+%     discc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
+%     treec(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
+%     bayesc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
+%     knnc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
+%     svmc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
         
-    show_results(file,idx_test_samples,response,img);
+%     show_results(file,idx_test_samples,response,img);
 
