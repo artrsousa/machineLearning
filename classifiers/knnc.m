@@ -11,7 +11,7 @@ function knnc(predictors, response, train_id, test_id, file)
             'AcquisitionFunctionName', 'expected-improvement-plus', ...
             'UseParallel', false, ...
             'ShowPlots', false, ...
-            'Verbose', 0));
+            'Verbose', 1));
     
     fprintf('Min Objective: %s\n', num2str(classifier.HyperparameterOptimizationResults.MinObjective));
     [label,~,~] = predict(classifier,predictors(test_id,:));
@@ -23,7 +23,7 @@ function knnc(predictors, response, train_id, test_id, file)
     
     %   Save results
     row = size(results,1)+1;
-    results{row,1} = classifier;
+    results{row,1} = classifier.ModelParameters;
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');
@@ -39,7 +39,7 @@ function knnc(predictors, response, train_id, test_id, file)
             'AcquisitionFunctionName', 'expected-improvement-plus', ...
             'UseParallel', false, ...
             'ShowPlots', false, ...
-            'Verbose', 0));
+            'Verbose', 1));
         
     fprintf('Min Objective: %s\n', num2str(classifier.HyperparameterOptimizationResults.MinObjective));
     [label,~,~] = predict(classifier,predictors(test_id,:));
@@ -51,7 +51,7 @@ function knnc(predictors, response, train_id, test_id, file)
     
     %   Save results
     row = size(results,1)+1;
-    results{row,1} = classifier;
+    results{row,1} = classifier.ModelParameters;
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');

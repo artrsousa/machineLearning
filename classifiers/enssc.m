@@ -11,9 +11,9 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
         'OptimizeHyperparameters', 'all', ...
         'HyperparameterOptimizationOptions', struct('Holdout',0.3, ...
         'AcquisitionFunctionName', 'expected-improvement-plus', ...
-        'UseParallel', false, ...
+        'UseParallel', true, ...
         'ShowPlots', false, ...
-        'Verbose', 0));
+        'Verbose', 1));
         
     fprintf('Min Objective: %s\n', num2str(classifier.HyperparameterOptimizationResults.MinObjective));
     [label,~] = predict(classifier,predictors(test_id,:));
@@ -25,7 +25,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
     
     %   Save results
     row = size(results,1)+1;
-    results{row,1} = classifier;
+    results{row,1} = classifier.ModelParameters;
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');
@@ -44,9 +44,9 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
         'ClassNames', unique(response(train_id)), ...
         'OptimizeHyperparameters', {'NumLearningCycles','NumNeighbors','Distance','DistanceWeight','Exponent','Standardize'}, ...
         'HyperparameterOptimizationOptions', struct('Holdout',0.3, ...
-        'UseParallel', false, ...
+        'UseParallel', true, ...
         'ShowPlots', false, ...
-        'Verbose', 0));
+        'Verbose', 1));
         
     fprintf('Min Objective: %s\n', num2str(classifier.HyperparameterOptimizationResults.MinObjective));
     [label,~] = predict(classifier,predictors(test_id,:));
@@ -58,7 +58,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
     
     %   Save results
     row = size(results,1)+1;
-    results{row,1} = classifier;
+    results{row,1} = classifier.ModelParameters;
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');
@@ -81,7 +81,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
         'HyperparameterOptimizationOptions', struct('Holdout',0.3, ...
         'UseParallel', true, ...
         'ShowPlots', false, ...
-        'Verbose', 0));
+        'Verbose', 1));
         
     fprintf('Min Objective: %s\n', num2str(classifier.HyperparameterOptimizationResults.MinObjective));    
     [label,~] = predict(classifier,predictors(test_id,:));
@@ -93,7 +93,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
 
     %   Save results
     row = size(results,1)+1;
-    results{row,1} = classifier;
+    results{row,1} = classifier.ModelParameters;
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');
@@ -101,7 +101,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
     disp('Enssembles: Discriminant Classifier');
 
     template = templateDiscriminant();
-    subspaceDimension = max(1, min(3, width(predictors(train_id,:)) - 1));
+    subspaceDimension = max(1, min(3, size(predictors(train_id,:),1) - 1));
     classifier = fitcensemble(...
         predictors(train_id,:), ...
         response(train_id), ...
@@ -113,7 +113,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
         'HyperparameterOptimizationOptions', struct('Holdout',0.3, ...
         'UseParallel', true, ...
         'ShowPlots', false, ...
-        'Verbose', 0));
+        'Verbose', 1));
         
     fprintf('Min Objective: %s\n', num2str(classifier.HyperparameterOptimizationResults.MinObjective));
     [label,~] = predict(classifier,predictors(test_id,:));
@@ -125,7 +125,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
     
     %   Save results
     row = size(results,1)+1;
-    results{row,1} = classifier;
+    results{row,1} = classifier.ModelParameters;
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');

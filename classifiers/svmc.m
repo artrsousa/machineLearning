@@ -2,7 +2,7 @@ function classifier = svmc(predictors, response, train_id, test_id, file)
     load(file,'results');
     
     fprintf('\n\nSupport Vector Machine Classifier\n');
-    template = templateSVM();
+    template = templateSVM('IterationLimit',500000);
     
     classifier = fitcecoc(...
         predictors(train_id,:), ...
@@ -26,7 +26,7 @@ function classifier = svmc(predictors, response, train_id, test_id, file)
     
     %   Save results
     row = size(results,1)+1;
-    results{row,1} = classifier;
+    results{row,1} = classifier.ModelParameters;
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');
