@@ -27,5 +27,8 @@ codegen/
 # Results file must not be on git files
 results/*
 
+# Datasets must be private
+datasets/*
+
 # Simulink cache files
 *.slxc
