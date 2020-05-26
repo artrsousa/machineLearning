@@ -1,11 +1,11 @@
 function compare_classifiers(file)
     load(file,'results');    
 
-    y = cell2mat(results(:,2)); x = results(:,1);
-
+    y = cell2mat(results(:,2)); x = results{:,1};
+    
     figure; plot(y,'LineWidth',2); hold on;
 
-    ax = gca; 
+    ax = gca;
     ax.XTick = 1:size(results,1);
     ax.XTickLabels = x;
     

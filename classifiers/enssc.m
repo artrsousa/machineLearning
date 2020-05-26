@@ -1,7 +1,7 @@
 function classifier = enssc(predictors, response, train_id, test_id, file)
     load(file,'results');
     
-    fprintf('\n\nEnssembles: Tree Classifier\n');
+    fprintf('\n\nEnsembles: Tree Classifier\n');
     template = templateTree(); 
     classifier = fitcensemble(...
         predictors(train_id,:), ...
@@ -25,12 +25,12 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
     
     %   Save results
     row = size(results,1)+1;
-    results{row,1} = classifier.ModelParameters;
+    results{row,1} = {'Ensembles: Tree Classifier'};
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');
     
-    fprintf('\n\nEnssembles: KNN Classifier - Optimize All HyperParameters\n');
+    fprintf('\n\nEnsembles: KNN Classifier - Optimize All HyperParameters\n');
     template = templateKNN(...
         'NSMethod','kdtree');
     
@@ -58,7 +58,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
     
     %   Save results
     row = size(results,1)+1;
-    results{row,1} = classifier.ModelParameters;
+    results{row,1} = {'Ensembles: KNN linear'};
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');
@@ -93,12 +93,12 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
 
     %   Save results
     row = size(results,1)+1;
-    results{row,1} = classifier.ModelParameters;
+    results{row,1} = {'Ensembles: KNN Polynominal'};
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');
     
-    disp('Enssembles: Discriminant Classifier');
+    disp('Ensembles: Discriminant Classifier');
 
     template = templateDiscriminant();
     subspaceDimension = max(1, min(3, size(predictors(train_id,:),1) - 1));
@@ -125,7 +125,7 @@ function classifier = enssc(predictors, response, train_id, test_id, file)
     
     %   Save results
     row = size(results,1)+1;
-    results{row,1} = classifier.ModelParameters;
+    results{row,1} = {'Ensembles: Discriminant Classifier'};
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');

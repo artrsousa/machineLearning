@@ -34,6 +34,6 @@ function show_results(result_file,idx,response,img)
             result_image = idx2paint(result_image,idx_labels(:,c),1,colors(c,1),colors(c,2),colors(c,3));
         end
 
-        show_results_predicted(result_image,labels,colors,results{k,1});
+        show_results_predicted(result_image,labels,colors,'teste');
     end
 end

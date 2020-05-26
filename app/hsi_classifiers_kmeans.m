@@ -7,9 +7,9 @@ function [y,idx] = hsi_classifiers_kmeans(hsi_samples)
 %   it'll be clear in each start
 %
     file = 'results/banana.mat';
-%     results = {};
-%     save(file,'results');
-%     clear results;
+    results = {};
+    save(file,'results');
+    clear results;
     
 %%  CREATE HYPERCUBE
     cube = cell(size(pred_names,1),1);
@@ -109,7 +109,7 @@ function [y,idx] = hsi_classifiers_kmeans(hsi_samples)
 %     treec(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
 %     bayesc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
 % %     knnc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
-%     svmc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
+    svmc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
 %     enssc(data(idx~=0,:),y(idx~=0,:),idx_train(idx~=0,:),idx_test(idx~=0,:),file);
         
     show_results(file,idx_test_samples,response,img);

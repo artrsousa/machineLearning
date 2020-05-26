@@ -22,7 +22,7 @@ function bayesc(predictors, response, train_id, test_id, file)
     disp(classifier.ModelParameters);
     
     row = size(results,1)+1;
-    results{row,1} = classifier.ModelParameters;
+    results{row,1} = {'Nayve Bayes'};
     results{row,2} = accuracy*100;
     results{row,3} = label;
     save(file,'results');
