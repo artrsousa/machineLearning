@@ -1,3 +1,13 @@
+%{
+confusion_matrix.m
+  This function plots the test results in a confusion matrix
+
+  Inputs:
+      classified:           Classified set
+      Test_array_respose:   Result of test
+  Outputs:
+      confusion_matrix:     Compared results in a confusion matrix
+%}
 function [confusion_matrix]=confusion_matrix(classified,Test_array_response)
 
 confusion_matrix = zeros(5, 5);

@@ -1,4 +1,3 @@
-function colors = distinguishable_colors(n_colors,bg,func)
 % DISTINGUISHABLE_COLORS: pick colors that are maximally perceptually distinct
 %
 % When plotting a set of lines, you may want to distinguish them by color.
@@ -55,6 +54,7 @@ function colors = distinguishable_colors(n_colors,bg,func)
 %   c = distinguishable_colors(25,'w',func);
 % Copyright 2010-2011 by Timothy E. Holy
   % Parse the inputs
+function colors = distinguishable_colors(n_colors,bg,func)
   if (nargin < 2)
     bg = [1 1 1];  % default white background
   else

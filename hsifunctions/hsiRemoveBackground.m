@@ -1,10 +1,19 @@
+%{
+hsiRemoveBackground.m
+  Removes background from HSI
+  
+  Inputs:
+      X: HSI hypercube
+  Outputs:
+      Y: HSI without backgound
+%}
 function [Y] = hsiRemoveBackground(X)
-    [~, Xscore,~,~, Xexplained,~] = pca(X);    
+  [~, Xscore,~,~, Xexplained,~] = pca(X);    
 
-    pcs = 1;
-    while (sum(Xexplained(1:pcs,1)) < 95)
-        pcs = pcs +1;
-    end
-    Y = getClusters(Xscore,pcs,2);
+  pcs = 1;
+  while (sum(Xexplained(1:pcs,1)) < 95)
+      pcs = pcs +1;
+  end
+  Y = getClusters(Xscore,pcs,2);
 end
 

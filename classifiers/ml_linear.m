@@ -1,3 +1,7 @@
+%{
+ml_linear.m
+  This script will clear the old data and save the new results
+%}
 clear; close all; clc;
 load ../dataset/banana/casca_maca.mat;
 load ../dataset/banana/casca_nanica.mat;
